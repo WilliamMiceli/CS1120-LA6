@@ -1,4 +1,6 @@
 package edu.wmich.cs1120.williambowen;
+
+import java.util.Stack;
 /**
  * A minimum value stack stores elements in order of size: the smallest 
  * element is stored at the top of the stack (and so will be the first to be 
@@ -30,6 +32,8 @@ public class MinValueStack<T extends Comparable<T>> {
      */
     public T push(T data){
 	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	stack1.push(data);
+    	return data;
     }
 
     /**
@@ -38,6 +42,7 @@ public class MinValueStack<T extends Comparable<T>> {
      */
     public T minValue(){
 	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	return null;
     }
 
     /**
@@ -46,6 +51,7 @@ public class MinValueStack<T extends Comparable<T>> {
      */
     public T pop(){ 
 	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	return stack1.pop();
     }
 
     /**
@@ -54,6 +60,7 @@ public class MinValueStack<T extends Comparable<T>> {
      */
     public boolean isEmpty(){
 	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	return stack1.isEmpty();
     }
 
     /**

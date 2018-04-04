@@ -1,4 +1,6 @@
 package edu.wmich.cs1120.williambowen;
+
+import java.util.*;
 /**
  * A version of a queue implemented with two stacks
  * @param <T> Type parameter for Generic class SQueue
@@ -24,6 +26,11 @@ public class SQueue<T> {
      */
     public T enqueue(T data){
        // INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	stack2.addAll(stack1);
+    	stack2.push(data);
+    	stack1.addAll(stack2);
+    	++this.size;
+    	return data;
     }
 
     /**
@@ -32,6 +39,12 @@ public class SQueue<T> {
      */
     public T dequeue(){
     	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	if(this.size <= 0) {
+    		return null;
+    	}else {
+    		--size;
+    		return stack1.pop();
+    	}
     }
 
     /**
