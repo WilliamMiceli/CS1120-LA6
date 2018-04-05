@@ -3,11 +3,14 @@ package edu.wmich.cs1120.williambowen;
 import java.util.ArrayList;
 import java.io.*;
 /**
- * 
- *
+ * The main class that runs the program
  */
 public class MainActivity {
-
+	/**
+	 * Main
+	 * @param args Nothing
+	 * @throws IOException But probably won't
+	 */
 	public static void main(String[] args) throws IOException {
 
 		ArrayList<Short> store = new ArrayList<>();
