@@ -25,10 +25,13 @@ public class SQueue<T> {
      * @return The data added to the queue (for simpler print statements)
      */
     public T enqueue(T data){
-       // INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
-    	stack2.addAll(stack1);
+    	while(stack1.size() > 0) {
+    		stack2.push(stack1.pop());
+    	}
     	stack2.push(data);
-    	stack1.addAll(stack2);
+    	while(stack2.size() > 0) {
+    		stack1.push(stack2.pop());
+    	}
     	++this.size;
     	return data;
     }
@@ -38,7 +41,6 @@ public class SQueue<T> {
      * @return The data in the front of the queue
      */
     public T dequeue(){
-    	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
     	if(this.size <= 0) {
     		return null;
     	}else {

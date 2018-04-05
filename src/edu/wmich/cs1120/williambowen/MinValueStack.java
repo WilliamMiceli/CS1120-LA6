@@ -31,8 +31,22 @@ public class MinValueStack<T extends Comparable<T>> {
      * @return The data added to the stack
      */
     public T push(T data){
-	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
-    	stack1.push(data);
+    	boolean sorted = false;
+    	while(!sorted) {
+    		if(stack1.empty() || data.compareTo(stack1.peek()) < 0) {
+    			stack2.push(data);
+    			sorted = true;
+    		}else {
+    			stack2.push(stack1.pop());
+    		}
+    	}
+    	while(stack1.size() > 0) {
+    		stack2.push(stack1.pop());
+    	}
+    	while(stack2.size() > 0) {
+    		stack1.push(stack2.pop());
+    	}
+    	++this.size;
     	return data;
     }
 
@@ -41,8 +55,11 @@ public class MinValueStack<T extends Comparable<T>> {
      * @return The minimum value stored in the stack.
      */
     public T minValue(){
-	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
-    	return null;
+    	if(size > 0) {
+    		return stack1.peek();
+    	}else {
+    		return null;
+    	}
     }
 
     /**
@@ -50,7 +67,7 @@ public class MinValueStack<T extends Comparable<T>> {
      * @return The popped data.
      */
     public T pop(){ 
-	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
+    	--this.size;
     	return stack1.pop();
     }
 
@@ -59,7 +76,6 @@ public class MinValueStack<T extends Comparable<T>> {
      * @return true if stack is empty, else false.
      */
     public boolean isEmpty(){
-	// INCLUDE CODE TO PERFORM REQUIRED ACTION(S).
     	return stack1.isEmpty();
     }
 
