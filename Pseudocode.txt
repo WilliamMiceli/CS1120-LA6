@@ -1,0 +1,183 @@
+//====================================================================================================
+//====================================================================================================
+class MainActivity {
+static void main(String[] args) throws IOException {
+
+ArrayList<Short> store = new ArrayList<>();
+Read read = new Read(store);
+
+QStack<Short> stack = new QStack<>();
+SQueue<Short> queue = new SQueue<>();
+MinValueStack<Short> mVStack = new MinValueStack<>();
+
+read.readFileInputStream("TestData.dat");
+
+Print: "The values pushed onto the stack are:"
+for(int i = 0; i < store.size(); ++i) {
+System.out.print(store.get(i) + " ");
+stack.push(store.get(i));
+mVStack.push(store.get(i));
+}
+
+Print: "\n\nThe values popped off the stack in order are:"
+while(stack.getSize() > 0) {
+System.out.print(stack.pop() + " ");
+}
+Print: "\n\nThe min value (from the minimum value stack) is:"+mVStack.minValue()
+
+Print: "\nThe values popped off the minimum value stack in order are:"
+while(mVStack.getSize() > 0) {
+System.out.print(mVStack.pop() + " ");
+}
+Print: "\n\nThe values enqueued onto the queue are:"
+for(int i = 0; i < store.size(); ++i) {
+System.out.print(store.get(i) + " ");
+queue.enqueue(store.get(i));
+}
+Print: "\n\nThe values dequeued from the queue in order are:"
+while(queue.getSize() > 0) {
+System.out.print(queue.dequeue() + " ");
+}
+}
+}
+//====================================================================================================
+//====================================================================================================
+class Read {
+
+ArrayList<Short> store;
+Read(ArrayList<Short> store) {
+this.store = store;
+}
+void readFileInputStream(String filename) {
+try (InputStream inputStream = new FileInputStream(filename);) {
+DataInputStream is = new DataInputStream(new BufferedInputStream(inputStream));
+while(true) {
+this.store.add(is.readShort());
+}
+} catch (EOFException ex) {
+// Import is complete
+} catch (IOException ex) {
+ex.printStackTrace();
+}
+}
+}
+//====================================================================================================
+//====================================================================================================
+class MinValueStack<T extends Comparable<T>> {
+
+Stack<T> stack1;
+Stack<T> stack2;
+int size;
+
+MinValueStack(){
+stack1 = new Stack<T>();
+stack2 = new Stack<T>();
+size = 0;
+}
+T push(T data){
+boolean sorted = false;
+while(!sorted) {
+if(stack1.empty() || data.compareTo(stack1.peek()) < 0) {
+stack2.push(data);
+sorted = true;
+}else {
+stack2.push(stack1.pop());
+}
+}
+while(stack1.size() > 0) {
+stack2.push(stack1.pop());
+}
+while(stack2.size() > 0) {
+stack1.push(stack2.pop());
+}
+++this.size;
+return data;
+}
+T minValue(){
+if(size > 0) {
+return stack1.peek();
+}else {
+return null;
+}
+}
+T pop(){ 
+--this.size;
+return stack1.pop();
+}
+boolean isEmpty(){
+return stack1.isEmpty();
+}
+int getSize() {
+return size;
+}
+}
+//====================================================================================================
+//====================================================================================================
+class SQueue<T> {
+Stack<T> stack1;
+Stack<T> stack2;
+int size;
+
+SQueue(){
+stack1 = new Stack<T>();
+stack2 = new Stack<T>();
+size = 0;
+}
+T enqueue(T data){
+while(stack1.size() > 0) {
+stack2.push(stack1.pop());
+}
+stack2.push(data);
+while(stack2.size() > 0) {
+stack1.push(stack2.pop());
+}
+++this.size;
+return data;
+}
+T dequeue(){
+if(this.size <= 0) {
+return null;
+}else {
+--size;
+return stack1.pop();
+}
+}
+int getSize() {
+return size;
+}
+}
+//====================================================================================================
+//====================================================================================================
+class QStack<T> {
+Queue<T> queue1;
+Queue<T> queue2;
+int size;
+
+QStack() {
+queue1 = new LinkedList<T>();
+queue2 = new LinkedList<T>();
+size = 0;
+}
+T push(T data) {
+queue2.add(data);
+while(queue1.size() > 0) {
+queue2.add(queue1.poll());
+}
+while(queue2.size() > 0) {
+queue1.add(queue2.poll());
+}
+++size;
+return data;
+}
+T pop() {
+if(size > 0) {
+--size;
+}
+return queue1.poll();
+}
+int getSize() {
+return size;
+}
+}
+//====================================================================================================
+//====================================================================================================
